@@ -1,0 +1,17 @@
+.grid {
+    width: 750px;
+    width: 750px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: greenyellow;
+}
+
+.grid div{
+    height: 50px;
+    width: 50px;
+    /* background-color: red; */
+}
+
+.snake {
+    background-color: black;
+}
