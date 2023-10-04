@@ -1,6 +1,6 @@
-.grid {
-    width: 750px;
-    width: 750px;
+/* .grid {
+    width: 500px;
+    width: 500px;
     display: flex;
     flex-wrap: wrap;
     background-color: greenyellow;
@@ -9,9 +9,22 @@
 .grid div{
     height: 50px;
     width: 50px;
-    /* background-color: red; */
-}
+    border-style: groove;
+
+} */
 
 .snake {
     background-color: black;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    background-color: greenyellow;
+}
+
+.grid div{
+    padding: 20px;
+    border-style: groove;
 }

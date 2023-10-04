@@ -1,6 +1,6 @@
 var canvas = document.getElementById("gameCanvas")
-var snake = { xLocation: 0, yLocation: 0, direction: "left", length: 1 }
-var food = { xLocation: 0, yLocation: 0 }
+var snake = { location: 0, direction: "right", length: 1 }
+var food = { location: 43, }
 
 const highScore = document.getElementById("highScore")
 const score = document.getElementById("score")
@@ -10,9 +10,77 @@ const width = 10
 
 const startGame = function () {
     console.log("start")
-    // console.log("square 43: " + squares[43])
-    // document.getElementsByClassName("square").style.backgroundColor = "blue"
-    squares[44].classList.add('snake')
+    squares[0].classList.add('snake')
+    snake.location = 0
+    console.log(snake)
 }
+// console.log(squares)
 
-console.log(squares)
+// Listen for arrow keys
+document.addEventListener("keydown", function (event) {
+    switch (event.key) {
+        case "ArrowUp":
+            moveSnakeUp()
+            break
+        case "ArrowDown":
+            moveSnakeDown()
+            break
+        case "ArrowLeft":
+            moveSnakeLeft()
+            break
+        case "ArrowRight":
+            moveSnakeRight()
+            break
+        default:
+            break
+    }
+});
+
+// Moves the snake 1 right, unless snake is at right side of board
+const moveSnakeRight = function () {
+    if (snake.location % 10 == 9) {
+        console.log("end of board")
+    }
+    else {
+        squares[snake.location].classList.remove('snake')
+        snake.location += 1
+        console.log(snake)
+        squares[snake.location].classList.add('snake')
+    }
+}
+// Moves the snake 1 left, unless snake is at left side of board
+const moveSnakeLeft = function () {
+    if (snake.location % 10 == 0) {
+        console.log("end of board")
+    }
+    else {
+        squares[snake.location].classList.remove('snake')
+        snake.location -= 1
+        console.log(snake)
+        squares[snake.location].classList.add('snake')
+    }
+}
+// Moves the snake 1 up, unless snake is at top of board
+const moveSnakeUp = function () {
+    if (snake.location < 10) {
+        console.log("end of board")
+    }
+    else {
+        squares[snake.location].classList.remove('snake')
+        snake.location -= 10
+        console.log(snake)
+        squares[snake.location].classList.add('snake')
+    }
+}
+// Moves the snake 1 down, unless snake is at bottom of board
+const moveSnakeDown = function () {
+    if (snake.location > 89) {
+        console.log("end of board")
+    }
+    else {
+        squares[snake.location].classList.remove('snake')
+        snake.location += 10
+        console.log(snake)
+        squares[snake.location].classList.add('snake')
+    }
+}
