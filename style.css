@@ -13,6 +13,10 @@
 
 } */
 
+.food {
+    background-color: red;
+}
+
 .snake {
     background-color: black;
 }

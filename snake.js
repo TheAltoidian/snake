@@ -1,20 +1,41 @@
 var canvas = document.getElementById("gameCanvas")
 var snake = { location: 0, direction: "right", length: 1 }
-var food = { location: 43, }
+var food = { location: 43 }
 
-const highScore = document.getElementById("highScore")
-const score = document.getElementById("score")
+const highScoreText = document.getElementById("highScore")
+const scoreText = document.getElementById("score")
 const grid = document.getElementById("grid")
 let squares = Array.from(document.getElementsByClassName("square"))
 const width = 10
+var highScore = 20
+var score = 0
 
-const startGame = function () {
-    console.log("start")
-    squares[0].classList.add('snake')
-    snake.location = 0
-    console.log(snake)
+// returns a random number between 0 and provided maximum
+function RNG(max) {
+    return Math.floor(Math.random() * max);
 }
-// console.log(squares)
+
+// Increments score by 1, increments high score by 1 if applicable
+const scoreUp = function () {
+    score = score + 1
+    scoreText.textContent = ("Current score: " + score)
+    if (score > highScore) {
+        highScoreText.textContent = ("High score: " + score)
+    }
+}
+
+// Checks if the space with the snake has food in it, removes the food, and calls to increment score
+const checkFood = function () {
+    if (squares[snake.location].classList.contains("food")) {
+        console.log("food eaten")
+        squares[snake.location].classList.remove('food')
+        makeFood()
+        scoreUp()
+    }
+    else {
+        console.log("no food")
+    }
+}
 
 // Listen for arrow keys
 document.addEventListener("keydown", function (event) {
@@ -35,52 +56,73 @@ document.addEventListener("keydown", function (event) {
             break
     }
 });
-
 // Moves the snake 1 right, unless snake is at right side of board
 const moveSnakeRight = function () {
     if (snake.location % 10 == 9) {
-        console.log("end of board")
+        console.log("Game Over")
     }
     else {
         squares[snake.location].classList.remove('snake')
         snake.location += 1
-        console.log(snake)
         squares[snake.location].classList.add('snake')
+        snake.direction = "right"
     }
+    checkFood()
 }
 // Moves the snake 1 left, unless snake is at left side of board
 const moveSnakeLeft = function () {
     if (snake.location % 10 == 0) {
-        console.log("end of board")
+        console.log("Game Over")
     }
     else {
         squares[snake.location].classList.remove('snake')
         snake.location -= 1
-        console.log(snake)
         squares[snake.location].classList.add('snake')
+        snake.direction = "left"
     }
+    checkFood()
 }
 // Moves the snake 1 up, unless snake is at top of board
 const moveSnakeUp = function () {
     if (snake.location < 10) {
-        console.log("end of board")
+        console.log("Game Over")
     }
     else {
         squares[snake.location].classList.remove('snake')
         snake.location -= 10
-        console.log(snake)
         squares[snake.location].classList.add('snake')
+        snake.direction = "up"
     }
+    checkFood()
 }
 // Moves the snake 1 down, unless snake is at bottom of board
 const moveSnakeDown = function () {
     if (snake.location > 89) {
-        console.log("end of board")
+        console.log("Game Over")
     }
     else {
         squares[snake.location].classList.remove('snake')
         snake.location += 10
-        console.log(snake)
         squares[snake.location].classList.add('snake')
+        snake.direction = "down"
     }
+    checkFood()
+}
+
+// Makes food at a random location that doesn't have the snake 
+const makeFood = function () {
+    do {
+        food.location = RNG(100)
+        console.log(food.location)
+    }
+    while (squares[food.location].classList.contains("snake"))
+    squares[food.location].classList.add('food')
+}
+
+// Starts the game
+const startGame = function () {
+    document.getElementById("startButton").remove()
+    squares[0].classList.add('snake')
+    snake.location = 0
+    makeFood()
 }
