@@ -15,10 +15,17 @@
 
 .food {
     background-color: red;
+    color: red;
+}
+
+.snakeTail {
+    background-color: gray;
+    color: gray;
 }
 
 .snake {
     background-color: black;
+    color: black;
 }
 
 .grid {
@@ -26,6 +33,7 @@
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     background-color: greenyellow;
+    color: greenyellow;
 }
 
 .grid div{

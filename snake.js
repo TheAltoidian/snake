@@ -1,5 +1,5 @@
 var canvas = document.getElementById("gameCanvas")
-var snake = { location: 0, direction: "right", length: 1 }
+var snake = { location: [0], direction: "right", length: 1 }
 var food = { location: 43 }
 
 const highScoreText = document.getElementById("highScore")
@@ -24,16 +24,19 @@ const scoreUp = function () {
     }
 }
 
+// Adds an additional segment to the snake
+const feedSnake = function () {
+    const newSegment = snake.location[0]
+    snake.location.push(newSegment)
+}
+
 // Checks if the space with the snake has food in it, removes the food, and calls to increment score
 const checkFood = function () {
-    if (squares[snake.location].classList.contains("food")) {
-        console.log("food eaten")
-        squares[snake.location].classList.remove('food')
+    if (squares[snake.location[0]].classList.contains("food")) {
+        squares[snake.location[0]].classList.remove('food')
+        feedSnake()
         makeFood()
         scoreUp()
-    }
-    else {
-        console.log("no food")
     }
 }
 
@@ -56,66 +59,89 @@ document.addEventListener("keydown", function (event) {
             break
     }
 });
-// Moves the snake 1 right, unless snake is at right side of board
+// Moves the snake 1 right, unless snake will hit tail or edge of board
 const moveSnakeRight = function () {
-    if (snake.location % 10 == 9) {
+    if (snake.location[0] % 10 == 9) {
         console.log("Game Over")
+    } else if (snake.direction == "left") { }
+    else if (snake.location.includes(snake.location[0] + 1)) {
+        console.log("Game Over: tail")
     }
     else {
-        squares[snake.location].classList.remove('snake')
-        snake.location += 1
-        squares[snake.location].classList.add('snake')
+        pullTail()
+        squares[snake.location[0]].classList.remove('snake')
+        snake.location[0] += 1
+        squares[snake.location[0]].classList.add('snake')
         snake.direction = "right"
     }
     checkFood()
 }
-// Moves the snake 1 left, unless snake is at left side of board
+// Moves the snake 1 left, unless snake will hit tail or edge of board
 const moveSnakeLeft = function () {
-    if (snake.location % 10 == 0) {
+    if (snake.location[0] % 10 == 0) {
         console.log("Game Over")
+    } else if (snake.direction == "right") { }
+    else if (snake.location.includes(snake.location[0] - 1)) {
+        console.log("Game Over: tail")
     }
     else {
-        squares[snake.location].classList.remove('snake')
-        snake.location -= 1
-        squares[snake.location].classList.add('snake')
+        pullTail()
+        squares[snake.location[0]].classList.remove('snake')
+        snake.location[0] -= 1
+        squares[snake.location[0]].classList.add('snake')
         snake.direction = "left"
     }
     checkFood()
 }
-// Moves the snake 1 up, unless snake is at top of board
+// Moves the snake 1 up, unless snake will hit tail or edge of board
 const moveSnakeUp = function () {
-    if (snake.location < 10) {
+    if (snake.location[0] < 10) {
         console.log("Game Over")
+    } else if (snake.direction == "down") { }
+    else if (snake.location.includes(snake.location[0] - 10)) {
+        console.log("Game Over: tail")
     }
     else {
-        squares[snake.location].classList.remove('snake')
-        snake.location -= 10
-        squares[snake.location].classList.add('snake')
+        pullTail()
+        squares[snake.location[0]].classList.remove('snake')
+        snake.location[0] -= 10
+        squares[snake.location[0]].classList.add('snake')
         snake.direction = "up"
     }
     checkFood()
 }
-// Moves the snake 1 down, unless snake is at bottom of board
+// Moves the snake 1 down, unless snake will hit tail or edge of board
 const moveSnakeDown = function () {
-    if (snake.location > 89) {
+    if (snake.location[0] > 89) {
         console.log("Game Over")
+    } else if (snake.direction == "up") { }
+    else if (snake.location.includes(snake.location[0] + 10)) {
+        console.log("Game Over: tail")
     }
     else {
-        squares[snake.location].classList.remove('snake')
-        snake.location += 10
-        squares[snake.location].classList.add('snake')
+        pullTail()
+        squares[snake.location[0]].classList.remove('snake')
+        snake.location[0] += 10
+        squares[snake.location[0]].classList.add('snake')
         snake.direction = "down"
     }
     checkFood()
+}
+// Pulls the tail along after the snake head
+const pullTail = function () {
+    squares[snake.location[snake.location.length - 1]].classList.remove('snakeTail')
+    for (let i = snake.location.length - 1; i > 0; i--) {
+        snake.location[i] = snake.location[i - 1]
+        squares[snake.location[i]].classList.add('snakeTail')
+    }
 }
 
 // Makes food at a random location that doesn't have the snake 
 const makeFood = function () {
     do {
         food.location = RNG(100)
-        console.log(food.location)
     }
-    while (squares[food.location].classList.contains("snake"))
+    while (squares[food.location].classList.contains("snake") || squares[food.location].classList.contains("snakeTail"))
     squares[food.location].classList.add('food')
 }
 
@@ -123,6 +149,6 @@ const makeFood = function () {
 const startGame = function () {
     document.getElementById("startButton").remove()
     squares[0].classList.add('snake')
-    snake.location = 0
+    snake.location[0] = 0
     makeFood()
 }
