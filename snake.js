@@ -9,6 +9,7 @@ let squares = Array.from(document.getElementsByClassName("square"))
 const width = 10
 var highScore = 10
 var score = 0
+const speed = 250
 
 var gameState = "ready"
 
@@ -42,27 +43,56 @@ const checkFood = function () {
     }
 }
 
-// Listen for arrow keys
+// Listen for arrow keys, change direction of the snake
 document.addEventListener("keydown", function (event) {
     if (gameState == "playing") {
         switch (event.key) {
+            case "w":
             case "ArrowUp":
-                moveSnakeUp()
+                if (snake.direction == "left" || snake.direction == "right") {
+                    snake.direction = "up"
+                }
                 break
+            case "s":
             case "ArrowDown":
-                moveSnakeDown()
+                if (snake.direction == "left" || snake.direction == "right") {
+                    snake.direction = "down"
+                }
                 break
+            case "a":
             case "ArrowLeft":
-                moveSnakeLeft()
+                if (snake.direction == "up" || snake.direction == "down") {
+                    snake.direction = "left"
+                }
                 break
+            case "d":
             case "ArrowRight":
-                moveSnakeRight()
+                if (snake.direction == "up" || snake.direction == "down") {
+                    snake.direction = "right"
+                }
                 break
             default:
                 break
         }
     }
 });
+// moves the snake forward according to its direction
+const moveSnake = function () {
+    switch (snake.direction) {
+        case "up":
+            moveSnakeUp()
+            break
+        case "down":
+            moveSnakeDown()
+            break
+        case "left":
+            moveSnakeLeft()
+            break
+        case "right":
+            moveSnakeRight()
+            break
+    }
+}
 // Moves the snake 1 right, unless snake will hit tail or edge of board
 const moveSnakeRight = function () {
     if (snake.location[0] % 10 == 9) {
@@ -151,7 +181,6 @@ const makeFood = function () {
 
 // Ends the game, stores a high score if achieved
 const gameOver = function () {
-
     gameState = "over"
     if (score > highScore) {
         localStorage.setItem("highScore", score)
@@ -163,13 +192,15 @@ const gameOver = function () {
 if (localStorage.getItem("highScore")) {
     console.log("high score loaded")
     highScoreText.textContent = ("High score: " + localStorage.getItem("highScore"))
-} 
+}
+
 // Starts the game
 const startGame = function () {
-    document.getElementById("startButton").remove()
+    document.getElementById("startButton").style.display = "none"
     document.getElementById("status").textContent = "Collect the pellets!"
     gameState = "playing"
     squares[0].classList.add('snake')
     snake.location[0] = 0
     makeFood()
+    setInterval(moveSnake, speed)
 }
