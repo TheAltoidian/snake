@@ -180,7 +180,6 @@ const makeFood = function () {
 // Ends the game, stores a high score if achieved
 const gameOver = function () {
     gameState = "over"
-    // clearInterval(snakeTimer)
     if (score > highScore) {
         localStorage.setItem("highScore", score)
         document.getElementById("status").textContent = "Game over, new high score!"
@@ -213,7 +212,7 @@ const resetGame = function () {
     score = 0
     snake = { location: [0], direction: "right", lastMove: "right" }
     food = { location: 43 }
-    highScore = 10
+    highScoreText.textContent = ("High score: " + localStorage.getItem("highScore") || 10)
     gameState = "playing"
     scoreText.textContent = ("Current score: " + score)
 
