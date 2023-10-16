@@ -1,12 +1,11 @@
 var canvas = document.getElementById("gameCanvas")
-var snake = { location: [0], direction: "right", length: 1 }
+var snake = { location: [0], direction: "right", lastMove: "right" }
 var food = { location: 43 }
 
 const highScoreText = document.getElementById("highScore")
 const scoreText = document.getElementById("score")
 const grid = document.getElementById("grid")
 let squares = Array.from(document.getElementsByClassName("square"))
-const width = 10
 var highScore = 10
 var score = 0
 const speed = 250
@@ -22,9 +21,6 @@ function RNG(max) {
 const scoreUp = function () {
     score = score + 1
     scoreText.textContent = ("Current score: " + score)
-    // if (score > highScore) {
-    //     highScoreText.textContent = ("High score: " + score)
-    // }
 }
 
 // Adds an additional segment to the snake
@@ -49,25 +45,25 @@ document.addEventListener("keydown", function (event) {
         switch (event.key) {
             case "w":
             case "ArrowUp":
-                if (snake.direction == "left" || snake.direction == "right") {
+                if (snake.lastMove == "left" || snake.lastMove == "right") {
                     snake.direction = "up"
                 }
                 break
             case "s":
             case "ArrowDown":
-                if (snake.direction == "left" || snake.direction == "right") {
+                if (snake.lastMove == "left" || snake.lastMove == "right") {
                     snake.direction = "down"
                 }
                 break
             case "a":
             case "ArrowLeft":
-                if (snake.direction == "up" || snake.direction == "down") {
+                if (snake.lastMove == "up" || snake.lastMove == "down") {
                     snake.direction = "left"
                 }
                 break
             case "d":
             case "ArrowRight":
-                if (snake.direction == "up" || snake.direction == "down") {
+                if (snake.lastMove == "up" || snake.lastMove == "down") {
                     snake.direction = "right"
                 }
                 break
@@ -78,19 +74,21 @@ document.addEventListener("keydown", function (event) {
 });
 // moves the snake forward according to its direction
 const moveSnake = function () {
-    switch (snake.direction) {
-        case "up":
-            moveSnakeUp()
-            break
-        case "down":
-            moveSnakeDown()
-            break
-        case "left":
-            moveSnakeLeft()
-            break
-        case "right":
-            moveSnakeRight()
-            break
+    if (gameState == "playing") {
+        switch (snake.direction) {
+            case "up":
+                moveSnakeUp()
+                break
+            case "down":
+                moveSnakeDown()
+                break
+            case "left":
+                moveSnakeLeft()
+                break
+            case "right":
+                moveSnakeRight()
+                break
+        }
     }
 }
 // Moves the snake 1 right, unless snake will hit tail or edge of board
@@ -106,7 +104,7 @@ const moveSnakeRight = function () {
         squares[snake.location[0]].classList.remove('snake')
         snake.location[0] += 1
         squares[snake.location[0]].classList.add('snake')
-        snake.direction = "right"
+        snake.lastMove = "right"
     }
     checkFood()
 }
@@ -123,7 +121,7 @@ const moveSnakeLeft = function () {
         squares[snake.location[0]].classList.remove('snake')
         snake.location[0] -= 1
         squares[snake.location[0]].classList.add('snake')
-        snake.direction = "left"
+        snake.lastMove = "left"
     }
     checkFood()
 }
@@ -140,7 +138,7 @@ const moveSnakeUp = function () {
         squares[snake.location[0]].classList.remove('snake')
         snake.location[0] -= 10
         squares[snake.location[0]].classList.add('snake')
-        snake.direction = "up"
+        snake.lastMove = "up"
     }
     checkFood()
 }
@@ -157,7 +155,7 @@ const moveSnakeDown = function () {
         squares[snake.location[0]].classList.remove('snake')
         snake.location[0] += 10
         squares[snake.location[0]].classList.add('snake')
-        snake.direction = "down"
+        snake.lastMove = "down"
     }
     checkFood()
 }
@@ -182,6 +180,7 @@ const makeFood = function () {
 // Ends the game, stores a high score if achieved
 const gameOver = function () {
     gameState = "over"
+    // clearInterval(snakeTimer)
     if (score > highScore) {
         localStorage.setItem("highScore", score)
         document.getElementById("status").textContent = "Game over, new high score!"
@@ -190,17 +189,45 @@ const gameOver = function () {
 
 // Sets high score based on stored record, if it exists
 if (localStorage.getItem("highScore")) {
-    console.log("high score loaded")
     highScoreText.textContent = ("High score: " + localStorage.getItem("highScore"))
 }
 
 // Starts the game
 const startGame = function () {
-    document.getElementById("startButton").style.display = "none"
+    document.getElementById("startButton").textContent = "Restart"
     document.getElementById("status").textContent = "Collect the pellets!"
     gameState = "playing"
-    squares[0].classList.add('snake')
+    squares[0].classList.add("snake")
     snake.location[0] = 0
     makeFood()
-    setInterval(moveSnake, speed)
 }
+// Restarts the game
+const resetGame = function () {
+    // Blanks out the board
+    for (let i = 0; i < 100; i++) {
+        squares[i].classList.remove("snake")
+        squares[i].classList.remove("snakeTail")
+        squares[i].classList.remove("food")
+    }
+    // Resets variables
+    score = 0
+    snake = { location: [0], direction: "right", lastMove: "right" }
+    food = { location: 43 }
+    highScore = 10
+    gameState = "playing"
+    scoreText.textContent = ("Current score: " + score)
+
+    startGame()
+}
+
+// On button push, starts game, or restarts game if game has already started
+const button = function () {
+    if (document.getElementById("startButton").textContent == "Start Game") {
+        startGame()
+    }
+    else {
+        resetGame()
+    }
+}
+
+const snakeTimer = setInterval(moveSnake, speed)
