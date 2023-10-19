@@ -1,42 +1,31 @@
-/* .grid {
-    width: 500px;
-    width: 500px;
-    display: flex;
-    flex-wrap: wrap;
+.square {
+    width: 65px;
+    height: 65px;
     background-color: greenyellow;
 }
 
-.grid div{
-    height: 50px;
-    width: 50px;
-    border-style: groove;
-
-} */
-
 .food {
-    background-color: red;
-    color: red;
+    background-color: goldenrod;
 }
 
 .snakeTail {
     background-color: gray;
-    color: gray;
 }
 
 .snake {
     background-color: black;
-    color: black;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
-    background-color: greenyellow;
-    color: greenyellow;
+    width: 650px;
+    height: 650px;
 }
 
 .grid div{
-    padding: 20px;
     border-style: groove;
+    border-color: lightgreen;
+    border-width: 1px;
 }

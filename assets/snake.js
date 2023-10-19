@@ -188,7 +188,8 @@ const gameOver = function () {
 
 // Sets high score based on stored record, if it exists
 if (localStorage.getItem("highScore")) {
-    highScoreText.textContent = ("High score: " + localStorage.getItem("highScore"))
+    highScore = localStorage.getItem("highScore")
+    highScoreText.textContent = ("High score: " + highScore)
 }
 
 // Starts the game
