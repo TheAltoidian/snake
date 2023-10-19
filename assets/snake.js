@@ -101,9 +101,12 @@ const moveSnakeRight = function () {
     }
     else {
         pullTail()
-        squares[snake.location[0]].classList.remove('snake')
+        squares[snake.location[0]].classList.remove('snake-right')
+        squares[snake.location[0]].classList.remove('snake-left')
+        squares[snake.location[0]].classList.remove('snake-up')
+        squares[snake.location[0]].classList.remove('snake-down')
         snake.location[0] += 1
-        squares[snake.location[0]].classList.add('snake')
+        squares[snake.location[0]].classList.add('snake-right')
         snake.lastMove = "right"
     }
     checkFood()
@@ -118,9 +121,12 @@ const moveSnakeLeft = function () {
     }
     else {
         pullTail()
-        squares[snake.location[0]].classList.remove('snake')
+        squares[snake.location[0]].classList.remove('snake-right')
+        squares[snake.location[0]].classList.remove('snake-left')
+        squares[snake.location[0]].classList.remove('snake-up')
+        squares[snake.location[0]].classList.remove('snake-down')
         snake.location[0] -= 1
-        squares[snake.location[0]].classList.add('snake')
+        squares[snake.location[0]].classList.add('snake-left')
         snake.lastMove = "left"
     }
     checkFood()
@@ -135,9 +141,12 @@ const moveSnakeUp = function () {
     }
     else {
         pullTail()
-        squares[snake.location[0]].classList.remove('snake')
+        squares[snake.location[0]].classList.remove('snake-right')
+        squares[snake.location[0]].classList.remove('snake-left')
+        squares[snake.location[0]].classList.remove('snake-up')
+        squares[snake.location[0]].classList.remove('snake-down')
         snake.location[0] -= 10
-        squares[snake.location[0]].classList.add('snake')
+        squares[snake.location[0]].classList.add('snake-up')
         snake.lastMove = "up"
     }
     checkFood()
@@ -152,9 +161,12 @@ const moveSnakeDown = function () {
     }
     else {
         pullTail()
-        squares[snake.location[0]].classList.remove('snake')
+        squares[snake.location[0]].classList.remove('snake-right')
+        squares[snake.location[0]].classList.remove('snake-left')
+        squares[snake.location[0]].classList.remove('snake-up')
+        squares[snake.location[0]].classList.remove('snake-down')
         snake.location[0] += 10
-        squares[snake.location[0]].classList.add('snake')
+        squares[snake.location[0]].classList.add('snake-down')
         snake.lastMove = "down"
     }
     checkFood()
@@ -197,7 +209,7 @@ const startGame = function () {
     document.getElementById("startButton").textContent = "Restart"
     document.getElementById("status").textContent = "Collect the pellets!"
     gameState = "playing"
-    squares[0].classList.add("snake")
+    squares[0].classList.add("snake-right")
     snake.location[0] = 0
     makeFood()
 }
@@ -205,7 +217,10 @@ const startGame = function () {
 const resetGame = function () {
     // Blanks out the board
     for (let i = 0; i < 100; i++) {
-        squares[i].classList.remove("snake")
+        squares[i].classList.remove('snake-right')
+        squares[i].classList.remove('snake-left')
+        squares[i].classList.remove('snake-up')
+        squares[i].classList.remove('snake-down')
         squares[i].classList.remove("snakeTail")
         squares[i].classList.remove("food")
     }

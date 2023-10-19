@@ -4,16 +4,49 @@
     background-color: greenyellow;
 }
 
+.little-hoop {
+    background-image: url('images/littleHoop.png');
+    background-size: cover;
+}
+
+.tall-hoop {
+    background-image: url('images/tallHoop.png');
+    background-size: cover;
+}
+
+.medium-hoop {
+    background-image: url('images/mediumHoop.png');
+    background-size: cover;
+}
+
 .food {
+    background-image: url('images/snitch.png');
+    background-size: cover;
     background-color: goldenrod;
 }
 
-.snakeTail {
-    background-color: gray;
-}
-
-.snake {
+.snake-right {
+    background-image: url('images/viper.png');
+    background-size: cover;
     background-color: black;
+}
+.snake-left {
+    background-image: url('images/viper.png');
+    background-size: cover;
+    background-color: black;
+    transform: scaleX(-1);
+}
+.snake-up {
+    background-image: url('images/viper.png');
+    background-size: cover;
+    background-color: black;
+    transform: rotate(270deg);
+}
+.snake-down {
+    background-image: url('images/viper.png');
+    background-size: cover;
+    background-color: black;
+    transform: rotate(90deg);
 }
 
 .grid {
@@ -24,8 +57,21 @@
     height: 650px;
 }
 
-.grid div{
+.square {
     border-style: groove;
     border-color: lightgreen;
     border-width: 1px;
+}
+
+.snakeTail {
+    background-color: #505050;
+    border-color: #A8CE3A;
+}
+
+.keeper-zone {
+    border-bottom-color: black;
+}
+
+.mid-line {
+    border-bottom-color: black;
 }
