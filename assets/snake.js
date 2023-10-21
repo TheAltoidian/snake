@@ -185,7 +185,9 @@ const makeFood = function () {
     do {
         food.location = RNG(100)
     }
-    while (squares[food.location].classList.contains("snake") || squares[food.location].classList.contains("snakeTail"))
+    while (squares[food.location].classList.contains("snake-right") || squares[food.location].classList.contains("snake-left") || 
+        squares[food.location].classList.contains("snake-up") || squares[food.location].classList.contains("snake-down") || 
+        squares[food.location].classList.contains("snakeTail"))
     squares[food.location].classList.add('food')
 }
 
@@ -195,6 +197,7 @@ const gameOver = function () {
     if (score > highScore) {
         localStorage.setItem("highScore", score)
         document.getElementById("status").textContent = "Game over, new high score!"
+        highScore = score
     } else { document.getElementById("status").textContent = "Game over :(" }
 }
 
@@ -225,10 +228,14 @@ const resetGame = function () {
         squares[i].classList.remove("food")
     }
     // Resets variables
-    score = 0
     snake = { location: [0], direction: "right", lastMove: "right" }
     food = { location: 43 }
-    highScoreText.textContent = ("High score: " + localStorage.getItem("highScore") || 10)
+    if (localStorage.getItem("highScore")) {
+        highScoreText.textContent = ("High score: " + localStorage.getItem("highScore"))
+    } else if (score == highScore) {
+        highScoreText.textContent = ("High score: " + highScore)
+    }
+    score = 0
     gameState = "playing"
     scoreText.textContent = ("Current score: " + score)
 
