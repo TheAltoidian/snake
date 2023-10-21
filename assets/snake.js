@@ -185,8 +185,8 @@ const makeFood = function () {
     do {
         food.location = RNG(100)
     }
-    while (squares[food.location].classList.contains("snake-right") || squares[food.location].classList.contains("snake-left") || 
-        squares[food.location].classList.contains("snake-up") || squares[food.location].classList.contains("snake-down") || 
+    while (squares[food.location].classList.contains("snake-right") || squares[food.location].classList.contains("snake-left") ||
+    squares[food.location].classList.contains("snake-up") || squares[food.location].classList.contains("snake-down") ||
         squares[food.location].classList.contains("snakeTail"))
     squares[food.location].classList.add('food')
 }
@@ -194,11 +194,21 @@ const makeFood = function () {
 // Ends the game, stores a high score if achieved
 const gameOver = function () {
     gameState = "over"
+    if (score == 1) {
+        document.getElementById("popupScore").textContent = "You caught a snitch!"
+    } else {
+        document.getElementById("popupScore").textContent = "You caught " + score + " snitches!"
+    }
     if (score > highScore) {
         localStorage.setItem("highScore", score)
         document.getElementById("status").textContent = "Game over, new high score!"
+        document.getElementById("popupStatus").textContent = "Game over, new high score!"
         highScore = score
-    } else { document.getElementById("status").textContent = "Game over :(" }
+    } else {
+        document.getElementById("status").textContent = "Game over :("
+        document.getElementById("popupStatus").textContent = "Game over :("
+    }
+    endGame()
 }
 
 // Sets high score based on stored record, if it exists
@@ -210,7 +220,7 @@ if (localStorage.getItem("highScore")) {
 // Starts the game
 const startGame = function () {
     document.getElementById("startButton").textContent = "Restart"
-    document.getElementById("status").textContent = "Collect the pellets!"
+    document.getElementById("status").textContent = "Collect the snitches!"
     gameState = "playing"
     squares[0].classList.add("snake-right")
     snake.location[0] = 0
@@ -252,4 +262,20 @@ const button = function () {
     }
 }
 
+// Snake speed
 const snakeTimer = setInterval(moveSnake, speed)
+
+// Modal
+var modal = document.getElementById("ad");
+var span = document.getElementsByClassName("close")[0];
+const endGame = function () {
+    modal.style.display = "block";
+}
+span.onclick = function () {
+    modal.style.display = "none";
+}
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
