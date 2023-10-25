@@ -11,74 +11,79 @@ var score = 0
 const speed = 250
 var gameState = "ready"
 
-// Moves the snake up, left, down, or right depending on where the click/touch was
+// Handles touchscreen inputs
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 const clickUp = document.querySelectorAll('.up')
 const clickDown = document.querySelectorAll('.down')
 const clickLeft = document.querySelectorAll('.left')
 const clickRight = document.querySelectorAll('.right')
-const handleClickUp = function(event) {
+const handleClickUp = function() {
     console.log("clicked Up")
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "up"
     }
 }
-const handleClickDown = function(event) {
+const handleClickDown = function() {
     console.log("clicked Down")
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "down"
     }
 }
-const handleClickLeft = function(event) {
+const handleClickLeft = function() {
     console.log("clicked Left")
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "left"
     }
 }
-const handleClickRight = function(event) {
+const handleClickRight = function() {
     console.log("clicked Up")
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "right"
     }
 }
-const handleTouchUp = function(event) {
+const handleTouchUp = function() {
     console.log("Touched Up")
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "up"
     }
 }
-const handleTouchDown = function(event) {
+const handleTouchDown = function() {
     console.log("Touched Down")
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "down"
     }
 }
-const handleTouchLeft = function(event) {
+const handleTouchLeft = function() {
     console.log("Touched Left")
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "left"
     }
 }
-const handleTouchRight = function(event) {
+const handleTouchRight = function() {
     console.log("Touched Up")
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "right"
     }
 }
 clickUp.forEach(square => {
-    square.addEventListener('click', handleClickUp);
-    square.addEventListener('touchstart', handleTouchUp);
+    if (isMobile){square.addEventListener('touchstart', handleTouchUp);}
+    else {square.addEventListener('click', handleClickUp);}
+    
 });
 clickDown.forEach(square => {
-    square.addEventListener('click', handleClickDown);
-    square.addEventListener('touchstart', handleTouchDown);
+    if (isMobile){square.addEventListener('touchstart', handleTouchDown);}
+    else {square.addEventListener('click', handleClickDown);}
+    
 });
 clickLeft.forEach(square => {
-    square.addEventListener('click', handleClickLeft);
-    square.addEventListener('touchstart', handleTouchLeft);
+    if (isMobile){square.addEventListener('touchstart', handleTouchLeft);}
+    else {square.addEventListener('click', handleClickLeft);}
+    
 });
 clickRight.forEach(square => {
-    square.addEventListener('click', handleClickRight);
-    square.addEventListener('touchstart', handleTouchRight);
+    if (isMobile){square.addEventListener('touchstart', handleTouchRight);}
+    else {square.addEventListener('click', handleClickRight);}
+    
 });
 
 
