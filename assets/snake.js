@@ -17,73 +17,65 @@ const clickUp = document.querySelectorAll('.up')
 const clickDown = document.querySelectorAll('.down')
 const clickLeft = document.querySelectorAll('.left')
 const clickRight = document.querySelectorAll('.right')
-const handleClickUp = function() {
-    console.log("clicked Up")
+const handleClickUp = function () {
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "up"
     }
 }
-const handleClickDown = function() {
-    console.log("clicked Down")
+const handleClickDown = function () {
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "down"
     }
 }
-const handleClickLeft = function() {
-    console.log("clicked Left")
+const handleClickLeft = function () {
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "left"
     }
 }
-const handleClickRight = function() {
-    console.log("clicked Up")
+const handleClickRight = function () {
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "right"
     }
 }
-const handleTouchUp = function() {
-    console.log("Touched Up")
+const handleTouchUp = function () {
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "up"
     }
 }
-const handleTouchDown = function() {
-    console.log("Touched Down")
+const handleTouchDown = function () {
     if (snake.lastMove == "left" || snake.lastMove == "right") {
         snake.direction = "down"
     }
 }
-const handleTouchLeft = function() {
-    console.log("Touched Left")
+const handleTouchLeft = function () {
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "left"
     }
 }
-const handleTouchRight = function() {
-    console.log("Touched Up")
+const handleTouchRight = function () {
     if (snake.lastMove == "up" || snake.lastMove == "down") {
         snake.direction = "right"
     }
 }
 clickUp.forEach(square => {
-    if (isMobile){square.addEventListener('touchstart', handleTouchUp);}
-    else {square.addEventListener('click', handleClickUp);}
-    
+    if (isMobile) { square.addEventListener('touchstart', handleTouchUp); }
+    else { square.addEventListener('click', handleClickUp); }
+
 });
 clickDown.forEach(square => {
-    if (isMobile){square.addEventListener('touchstart', handleTouchDown);}
-    else {square.addEventListener('click', handleClickDown);}
-    
+    if (isMobile) { square.addEventListener('touchstart', handleTouchDown); }
+    else { square.addEventListener('click', handleClickDown); }
+
 });
 clickLeft.forEach(square => {
-    if (isMobile){square.addEventListener('touchstart', handleTouchLeft);}
-    else {square.addEventListener('click', handleClickLeft);}
-    
+    if (isMobile) { square.addEventListener('touchstart', handleTouchLeft); }
+    else { square.addEventListener('click', handleClickLeft); }
+
 });
 clickRight.forEach(square => {
-    if (isMobile){square.addEventListener('touchstart', handleTouchRight);}
-    else {square.addEventListener('click', handleClickRight);}
-    
+    if (isMobile) { square.addEventListener('touchstart', handleTouchRight); }
+    else { square.addEventListener('click', handleClickRight); }
+
 });
 
 
