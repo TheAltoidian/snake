@@ -9,8 +9,79 @@ let squares = Array.from(document.getElementsByClassName("square"))
 var highScore = 10
 var score = 0
 const speed = 250
-
 var gameState = "ready"
+
+// Moves the snake up, left, down, or right depending on where the click/touch was
+const clickUp = document.querySelectorAll('.up')
+const clickDown = document.querySelectorAll('.down')
+const clickLeft = document.querySelectorAll('.left')
+const clickRight = document.querySelectorAll('.right')
+const handleClickUp = function(event) {
+    console.log("clicked Up")
+    if (snake.lastMove == "left" || snake.lastMove == "right") {
+        snake.direction = "up"
+    }
+}
+const handleClickDown = function(event) {
+    console.log("clicked Down")
+    if (snake.lastMove == "left" || snake.lastMove == "right") {
+        snake.direction = "down"
+    }
+}
+const handleClickLeft = function(event) {
+    console.log("clicked Left")
+    if (snake.lastMove == "up" || snake.lastMove == "down") {
+        snake.direction = "left"
+    }
+}
+const handleClickRight = function(event) {
+    console.log("clicked Up")
+    if (snake.lastMove == "up" || snake.lastMove == "down") {
+        snake.direction = "right"
+    }
+}
+const handleTouchUp = function(event) {
+    console.log("Touched Up")
+    if (snake.lastMove == "left" || snake.lastMove == "right") {
+        snake.direction = "up"
+    }
+}
+const handleTouchDown = function(event) {
+    console.log("Touched Down")
+    if (snake.lastMove == "left" || snake.lastMove == "right") {
+        snake.direction = "down"
+    }
+}
+const handleTouchLeft = function(event) {
+    console.log("Touched Left")
+    if (snake.lastMove == "up" || snake.lastMove == "down") {
+        snake.direction = "left"
+    }
+}
+const handleTouchRight = function(event) {
+    console.log("Touched Up")
+    if (snake.lastMove == "up" || snake.lastMove == "down") {
+        snake.direction = "right"
+    }
+}
+clickUp.forEach(square => {
+    square.addEventListener('click', handleClickUp);
+    square.addEventListener('touchstart', handleTouchUp);
+});
+clickDown.forEach(square => {
+    square.addEventListener('click', handleClickDown);
+    square.addEventListener('touchstart', handleTouchDown);
+});
+clickLeft.forEach(square => {
+    square.addEventListener('click', handleClickLeft);
+    square.addEventListener('touchstart', handleTouchLeft);
+});
+clickRight.forEach(square => {
+    square.addEventListener('click', handleClickRight);
+    square.addEventListener('touchstart', handleTouchRight);
+});
+
+
 
 // returns a random number between 0 and provided maximum
 function RNG(max) {
