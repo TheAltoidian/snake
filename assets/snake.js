@@ -288,7 +288,8 @@ if (localStorage.getItem("highScore")) {
 // Starts the game
 const startGame = function () {
     document.getElementById("startButton").textContent = "Restart"
-    document.getElementById("status").textContent = "Collect the snitches!"
+    if (isMobile) { document.getElementById("status").textContent = "Tap the sides of the field to collect the snitches!" }
+    else { document.getElementById("status").textContent = "Use arrow keys to collect the snitches!" }
     gameState = "playing"
     squares[0].classList.add("snake-right")
     snake.location[0] = 0
